@@ -143,7 +143,7 @@ export default function PersistentDrawerLeft( { children }: PersistentDrawerLeft
         </List>
         <Divider />
         <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
+          {['Txiktxik', 'Yaourt', 'Descending thirds'].map((text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton>
                 <ListItemIcon>

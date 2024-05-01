@@ -9,7 +9,6 @@ import {
 } from "@remix-run/react";
 import PersistentDrawerLeft from "./components/sidebar"
 import React from "react";
-import theme from "./src/theme";
 
 
 interface DocumentProps {
@@ -17,17 +16,15 @@ interface DocumentProps {
   title?: string;
 }
 
-export function Document({ children, title }: DocumentProps) {
+export function Layout({ children, title }: DocumentProps) {
   return (
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <meta name="theme-color" content={theme.palette.primary.main} />
         {title ? <title>{title}</title> : null}
         <Meta />
         <Links />
-        <meta name="emotion-insertion-point" content="emotion-insertion-point" />
       </head>
       <body>
         {children}
@@ -41,11 +38,9 @@ export function Document({ children, title }: DocumentProps) {
 
 export default function App() {
   return (
-    <Document>
-      <PersistentDrawerLeft>
-        <Outlet />
-      </PersistentDrawerLeft>
-    </Document>
+    <PersistentDrawerLeft>
+      <Outlet />
+    </PersistentDrawerLeft>
   )
 }
 
@@ -69,26 +64,26 @@ export function ErrorBoundary() {
     }
 
     return (
-      <Document title={`${error.status} ${error.statusText}`}>
+      <Layout title={`${error.status} ${error.statusText}`}>
         <h1>
           {error.status}: {error.statusText}
         </h1>
         {message}
-      </Document>
+      </Layout>
     );
   }
 
   if (error instanceof Error) {
     console.error(error);
     return (
-      <Document title="Error!">
+      <Layout title="Error!">
         <div>
           <h1>There was an error</h1>
           <p>{error.message}</p>
           <hr />
           <p>Hey, developer, you should replace this with what you want your users to see.</p>
         </div>
-      </Document>
+      </Layout>
     );
   }
 
