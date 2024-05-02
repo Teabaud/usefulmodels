@@ -1,5 +1,6 @@
-import { Box, Link, List, ListItem, Typography } from "@mui/material";
+import { Divider, Link, ListItem, ListItemText, Stack, Typography } from "@mui/material";
 import type { MetaFunction } from "@remix-run/node";
+import { BulletList, Paragraph } from "~/components/Text";
 
 export const meta: MetaFunction = () => {
   return [
@@ -10,37 +11,31 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   return (
-    <Box>
-      <Typography variant="h2">Welcome to Remix</Typography>
-      <List>
+    <Stack spacing={2}>
+      <Typography variant="h2" display="flex" justifyContent="center">Welcome to Useful Models</Typography>
+      <Divider />
+      <Paragraph>A model is a simplification of the reality. All of them are inherently imperfect, and reality is the only judge. But they are the best tool we have to navigate the world's complexity.</Paragraph>
+      <Paragraph>Some models are quite crude, and still pretty useful for our needs. "Objects fall straight down" is oversimplified, but still quite a useful model! No need for anything more elaborate to withdraw your foot out of the way of that hammer you just dropped. However, we sometimes need more complex models. Here are some possible reasons:</Paragraph>
+      <BulletList>
         <ListItem>
-          <Link
-            target="_blank"
-            href="https://remix.run/tutorials/blog"
-            rel="noreferrer"
-          >
-            15m Quickstart Blog Tutorial
-          </Link>
+          <ListItemText>
+            We would like to tackle a more general problem. <Link target="_blank" href="https://en.wikipedia.org/wiki/Newton%27s_laws_of_motion" rel="noreferrer" >Newton's laws of motion</Link> is one of the most succesful physical model.
+          </ListItemText>
         </ListItem>
         <ListItem>
-          <Link
-            target="_blank"
-            href="https://remix.run/tutorials/jokes"
-            rel="noreferrer"
-          >
-            Deep Dive Jokes App Tutorial
-          </Link>
+          <ListItemText>
+            We want more accuracy. A <Link target="_blank" href="https://en.wikipedia.org/wiki/Tribology" rel="noreferrer" >tribology model</Link> might tell you how the hammer slipped out of your hands, and what kind of glove would have prevented that.
+          </ListItemText>
         </ListItem>
         <ListItem>
-          <Link
-            target="_blank"
-            href="https://remix.run/docs"
-            rel="noreferrer"
-          >
-            Remix Docs
-          </Link>
+          <ListItemText>
+            Tackle a harder problems. Some problems are surprisingly hard to model. Facial recognition is one of them.
+          </ListItemText>
         </ListItem>
-      </List>
-    </Box>
+      </BulletList>
+      <Paragraph>Hopefully, our brain come prewired for this last one! But it not always the case, and some models require meticulous expertise (and powerfull computers) to be used.</Paragraph>
+      <Paragraph>Models are one of our best tools to understand the world around us. But here is my favorite part: It turned out that models that were developped for fluid dynamics described well traffic jams. Models that were developped for economics worked well for politics. Finance for medecine. Internet for ecology. Enginering for neuroscience. And much more! Models have been incredibly versatile and effective across various fields, and understanding models helps you understand all sciences at the same time.</Paragraph>
+      <Paragraph>Are you ready to discover some of the most useful models to understand today's world? Let's go!</Paragraph>
+    </Stack>
   );
 }

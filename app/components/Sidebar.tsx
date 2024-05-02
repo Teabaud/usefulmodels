@@ -23,7 +23,7 @@ import {
     Mail as MailIcon
 } from '@mui/icons-material';
 
-import RemixLink from './RemixLink';
+import { RemixLink } from './Text';
 
 const drawerWidth = 240;
 

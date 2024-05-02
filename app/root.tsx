@@ -9,11 +9,11 @@ import {
 } from "@remix-run/react";
 import React, { useLayoutEffect } from "react";
 import { EmotionCache, withEmotionCache } from "@emotion/react";
+import { Box, Typography } from "@mui/material";
 
 import ClientStyleContext from "./utils/ClientStyleContext";
 import Sidebar from "./components/Sidebar"
 import theme from "./theme"
-import { Box, Typography } from "@mui/material";
 
 
 interface DocumentProps {
@@ -61,6 +61,23 @@ export const Document = withEmotionCache(({ children, title }: DocumentProps, em
           <Box
             display="flex"
             justifyContent="center"
+            maxWidth="105ch"
+            margin="auto"
+            // sx={{
+            //   width: "100%",
+            //   margin-left: "auto",
+            //   box-sizing: "border-box",
+            //   margin-right: "auto",
+            //   display: "block",
+            //   padding-left: 16px,
+            //   padding-right: 16px,
+            //   padding-top: calc(var(--MuiDocs-header-height) + 32px),
+            //   font-family: Arial,
+            //   position: relative,
+            //   min-width: 0,
+            //   font-family: Arial,
+            //   max-width: 105ch,
+            // }}
           >
             {children}
           </Box>
