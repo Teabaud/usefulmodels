@@ -13,9 +13,8 @@ import {
     ListItemIcon,
     ListItemText,
     AppBar as MuiAppBar,
-    AppBarProps as MuiAppBarProps
+    AppBarProps as MuiAppBarProps,
 } from '@mui/material'
-
 import {
     Menu as MenuIcon,
     ChevronLeft as ChevronLeftIcon,
@@ -23,6 +22,8 @@ import {
     Inbox as InboxIcon,
     Mail as MailIcon
 } from '@mui/icons-material';
+
+import RemixLink from './RemixLink';
 
 const drawerWidth = 240;
 
@@ -76,11 +77,11 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
-interface PersistentDrawerLeftProps {
+interface SidebarProps {
   children: React.ReactNode;
 }
 
-export default function PersistentDrawerLeft( { children }: PersistentDrawerLeftProps ) {
+export default function Sidebar( { children }: SidebarProps ) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -94,7 +95,7 @@ export default function PersistentDrawerLeft( { children }: PersistentDrawerLeft
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <AppBar position="fixed" open={open}>
+      <AppBar color="primary" position="fixed" open={open}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -105,9 +106,11 @@ export default function PersistentDrawerLeft( { children }: PersistentDrawerLeft
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Persistent drawer
-          </Typography>
+          <RemixLink to="/error">
+            <Typography variant="h6" noWrap component="div">
+              Useful Models
+            </Typography>
+          </RemixLink>
         </Toolbar>
       </AppBar>
       <Drawer

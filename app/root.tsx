@@ -7,8 +7,13 @@ import {
   isRouteErrorResponse,
   useRouteError,
 } from "@remix-run/react";
-import PersistentDrawerLeft from "./components/sidebar"
-import React from "react";
+import React, { useLayoutEffect } from "react";
+import { EmotionCache, withEmotionCache } from "@emotion/react";
+
+import ClientStyleContext from "./utils/ClientStyleContext";
+import Sidebar from "./components/Sidebar"
+import theme from "./theme"
+import { Box, Typography } from "@mui/material";
 
 
 interface DocumentProps {
@@ -16,31 +21,63 @@ interface DocumentProps {
   title?: string;
 }
 
-export function Layout({ children, title }: DocumentProps) {
+function reapplyStyle(emotionCache: EmotionCache) { 
+  const clientStyleData = React.useContext(ClientStyleContext);
+
+  // Only executed on client
+  useLayoutEffect(() => {
+    // re-link sheet container
+    emotionCache.sheet.container = document.head;
+    // re-inject tags
+    const tags = emotionCache.sheet.tags;
+    emotionCache.sheet.flush();
+    tags.forEach((tag) => {
+      // eslint-disable-next-line no-underscore-dangle
+      (emotionCache.sheet as any)._insertTag(tag);
+    });
+    // reset cache to reapply global styles
+    clientStyleData.reset();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+};
+
+
+export const Document = withEmotionCache(({ children, title }: DocumentProps, emotionCache) => {
+  reapplyStyle(emotionCache);
+
   return (
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="theme-color" content={theme.palette.primary.main} />
         {title ? <title>{title}</title> : null}
         <Meta />
         <Links />
+        <meta name="emotion-insertion-point" content="emotion-insertion-point"/>
       </head>
       <body>
-        {children}
+        <Sidebar>
+          <Box
+            display="flex"
+            justifyContent="center"
+          >
+            {children}
+          </Box>
+        </Sidebar>
         <ScrollRestoration />
         <Scripts />
       </body>
     </html>
   );
-};
+});
 
 
 export default function App() {
   return (
-    <PersistentDrawerLeft>
-      <Outlet />
-    </PersistentDrawerLeft>
+    <Document>
+        <Outlet />
+    </Document>
   )
 }
 
@@ -64,26 +101,26 @@ export function ErrorBoundary() {
     }
 
     return (
-      <Layout title={`${error.status} ${error.statusText}`}>
-        <h1>
-          {error.status}: {error.statusText}
-        </h1>
-        {message}
-      </Layout>
+      <Document title={`${error.status} ${error.statusText}`}>
+        <Box>
+          <Typography variant="h2">{error.status}: {error.statusText}</Typography>
+          {message}
+        </Box>
+      </Document>
     );
   }
 
   if (error instanceof Error) {
     console.error(error);
     return (
-      <Layout title="Error!">
+      <Document title={`${error.name}`}>
         <div>
           <h1>There was an error</h1>
           <p>{error.message}</p>
           <hr />
           <p>Hey, developer, you should replace this with what you want your users to see.</p>
         </div>
-      </Layout>
+      </Document>
     );
   }
 

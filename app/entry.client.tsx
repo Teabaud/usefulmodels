@@ -5,24 +5,46 @@ import { CacheProvider } from '@emotion/react';
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import theme from './theme';
-import createCache from '@emotion/cache';
+import createEmotionCache from './utils/createEmotionCache';
+import ClientStyleContext from './utils/ClientStyleContext';
 
 
-const emotionCache = createCache({ key: 'css' })
+interface ClientCacheProviderProps { children: React.ReactNode; }
+
+function ClientCacheProvider({ children }: ClientCacheProviderProps) {
+  const [cache, setCache] = React.useState(createEmotionCache());
+
+  const clientStyleContextValue = React.useMemo(
+    () => ({
+      reset() {
+        setCache(createEmotionCache());
+      },
+    }),
+    [],
+  );
+
+  return (
+    <ClientStyleContext.Provider value={clientStyleContextValue}>
+      <CacheProvider value={cache}>{children}</CacheProvider>
+    </ClientStyleContext.Provider>
+  );
+}
+
 
 const hydrate = () => {
   React.startTransition(() => {
     ReactDOM.hydrateRoot(
       document,
-      <CacheProvider value={emotionCache}>
+      <ClientCacheProvider>
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <RemixBrowser />
         </ThemeProvider>
-      </CacheProvider>,
+      </ClientCacheProvider>,
     );
   });
 };
+
 
 if (window.requestIdleCallback) {
   window.requestIdleCallback(hydrate);
