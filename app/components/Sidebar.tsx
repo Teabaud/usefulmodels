@@ -106,7 +106,7 @@ export default function Sidebar( { children }: SidebarProps ) {
           >
             <MenuIcon />
           </IconButton>
-          <RemixLink to="/error">
+          <RemixLink to="/">
             <Typography variant="h6" noWrap component="div">
               Useful Models
             </Typography>

@@ -13,7 +13,7 @@ import { Box, Typography } from "@mui/material";
 
 import ClientStyleContext from "./utils/ClientStyleContext";
 import Sidebar from "./components/Sidebar"
-import theme from "./theme"
+import theme from "./theme/theme"
 
 
 interface DocumentProps {
@@ -21,7 +21,7 @@ interface DocumentProps {
   title?: string;
 }
 
-function reapplyStyle(emotionCache: EmotionCache) { 
+export const Document = withEmotionCache(({ children, title }: DocumentProps, emotionCache: EmotionCache) => {
   const clientStyleData = React.useContext(ClientStyleContext);
 
   // Only executed on client
@@ -39,11 +39,6 @@ function reapplyStyle(emotionCache: EmotionCache) {
     clientStyleData.reset();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-};
-
-
-export const Document = withEmotionCache(({ children, title }: DocumentProps, emotionCache) => {
-  reapplyStyle(emotionCache);
 
   return (
     <html lang="en">
@@ -63,21 +58,6 @@ export const Document = withEmotionCache(({ children, title }: DocumentProps, em
             justifyContent="center"
             maxWidth="105ch"
             margin="auto"
-            // sx={{
-            //   width: "100%",
-            //   margin-left: "auto",
-            //   box-sizing: "border-box",
-            //   margin-right: "auto",
-            //   display: "block",
-            //   padding-left: 16px,
-            //   padding-right: 16px,
-            //   padding-top: calc(var(--MuiDocs-header-height) + 32px),
-            //   font-family: Arial,
-            //   position: relative,
-            //   min-width: 0,
-            //   font-family: Arial,
-            //   max-width: 105ch,
-            // }}
           >
             {children}
           </Box>
@@ -120,7 +100,7 @@ export function ErrorBoundary() {
     return (
       <Document title={`${error.status} ${error.statusText}`}>
         <Box>
-          <Typography variant="h2">{error.status}: {error.statusText}</Typography>
+          <Typography variant="h1">{error.status}: {error.statusText}</Typography>
           {message}
         </Box>
       </Document>
