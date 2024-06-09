@@ -12,7 +12,8 @@ import { EmotionCache, withEmotionCache } from "@emotion/react";
 import { Box, Typography } from "@mui/material";
 
 import ClientStyleContext from "./utils/ClientStyleContext";
-import Sidebar from "./components/Sidebar"
+import ContentBox from "./components/ContentBox"
+import NavBar from "./components/NavBar"
 import theme from "./theme/theme"
 
 
@@ -52,16 +53,7 @@ export const Document = withEmotionCache(({ children, title }: DocumentProps, em
         <meta name="emotion-insertion-point" content="emotion-insertion-point"/>
       </head>
       <body>
-        <Sidebar>
-          <Box
-            display="flex"
-            justifyContent="center"
-            maxWidth="105ch"
-            margin="auto"
-          >
-            {children}
-          </Box>
-        </Sidebar>
+        {children}
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -69,12 +61,22 @@ export const Document = withEmotionCache(({ children, title }: DocumentProps, em
   );
 });
 
+export function MainLayout({children, title} : DocumentProps) {
+  return (
+    <Document title={title}>
+      <NavBar />
+      <ContentBox>
+        {children}
+      </ContentBox>
+    </Document>
+  )
+}
 
 export default function App() {
   return (
-    <Document>
-        <Outlet />
-    </Document>
+    <MainLayout>
+      <Outlet />
+    </MainLayout>
   )
 }
 
@@ -98,26 +100,26 @@ export function ErrorBoundary() {
     }
 
     return (
-      <Document title={`${error.status} ${error.statusText}`}>
+      <MainLayout title={`${error.status} ${error.statusText}`}>
         <Box>
           <Typography variant="h1">{error.status}: {error.statusText}</Typography>
           {message}
         </Box>
-      </Document>
+      </MainLayout>
     );
   }
 
   if (error instanceof Error) {
     console.error(error);
     return (
-      <Document title={`${error.name}`}>
+      <MainLayout title={`${error.name}`}>
         <div>
           <h1>There was an error</h1>
           <p>{error.message}</p>
           <hr />
           <p>Hey, developer, you should replace this with what you want your users to see.</p>
         </div>
-      </Document>
+      </MainLayout>
     );
   }
 

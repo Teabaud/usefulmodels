@@ -1,6 +1,7 @@
 import { Divider, Link, ListItem, ListItemText, Stack, Typography } from "@mui/material";
 import type { MetaFunction } from "@remix-run/node";
-import { BulletList, Paragraph } from "~/components/Text";
+
+import { BulletList, Paragraph } from "~/components/TextElements";
 
 export const meta: MetaFunction = () => {
   return [

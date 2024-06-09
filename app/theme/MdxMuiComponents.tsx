@@ -1,5 +1,6 @@
 import { Typography, Link as MuiLink } from '@mui/material';
-import { Paragraph } from '~/components/Text'
+
+import { Paragraph } from '~/components/TextElements'
 
 export const MdxMuiComponents = {
   h1: (props: any) => <Typography variant="h2" {...props} />,

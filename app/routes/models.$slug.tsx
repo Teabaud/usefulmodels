@@ -1,12 +1,13 @@
 import { getMDXComponent } from 'mdx-bundler/client';
 import { useMemo } from 'react';
 import { useLoaderData } from '@remix-run/react';
-import { Divider, Stack, Typography } from "@mui/material";
-import { Paragraph } from "~/components/Text";
-import { MdxMuiComponents } from "~/theme/MdxMuiComponents"
-
-import { getArticle } from '~/utils/mdx.server';
+import { Divider, Stack, Typography, Paper } from "@mui/material";
 import { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
+
+import { Paragraph } from "~/components/TextElements";
+import { MdxMuiComponents } from "~/theme/MdxMuiComponents"
+import { getArticle } from '~/utils/mdx.server';
+
 
 interface LoaderFunctionArgsWithSlug extends LoaderFunctionArgs {
   params: {
@@ -35,7 +36,9 @@ export default function Article() {
       <Typography variant="h1" display="flex" justifyContent="center">{frontmatter.title}</Typography>
       <Paragraph>{frontmatter.summary}</Paragraph>
       <Divider />
-      <ArticleContent components={MdxMuiComponents}/>
+      <Paper>
+        <ArticleContent components={MdxMuiComponents}/>
+      </Paper>
     </Stack>
   )
 }
