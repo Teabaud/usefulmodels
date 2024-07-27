@@ -1,6 +1,11 @@
-# Welcome to Remix + Vite!
+# Welcome to Useful Models!
+This project is designed to streamline the process of writing interactive educational articles about using Markdown. By leveraging MDX and animation libraries, this template shift the focus on the content and animations without worrying about the intricacies of web development.
 
-📖 See the [Remix docs](https://remix.run/docs) and the [Remix Vite docs](https://remix.run/docs/en/main/guides/vite) for details on supported features.
+## Key Features
+- MDX Integration: Write articles in Markdown and seamlessly embed interactive models.
+- Animation Library: Utilize a powerful animation library to bring models to life and enhance the reader's experience.
+- Automated Web Page Generation: The template automatically generates a web page for each article, allowing to publish content quickly and efficiently.
+- Focus on Content: Spend more time creating and refining models and articles, with the template handling the web presentation
 
 ## Development
 
